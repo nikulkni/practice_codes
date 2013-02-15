@@ -1,11 +1,44 @@
 #include<iostream>
+#include<fstream>
 #include <stdlib.h>
 #include<stdio.h>
+#include<strings.h>
 #include<float.h>
 #include "quicksort.h"
 #include "limits.h"
 
 using namespace std;
+
+struct arrayVal{
+	int value;
+	struct arrayVal *next;
+};
+
+int * readArrayFromFile(char *filename){
+	struct arrayVal head;
+
+
+	ifstream myReadFile;
+	myReadFile.open("inputFile.txt");
+	char output[100];
+
+	if(myReadFile.is_open()){
+		if (!myReadFile.eof()) {
+			do{
+				bzero(output, 100);
+				myReadFile >> output;
+				cout<<atoi(output);
+
+			}while(!myReadFile.eof());
+		}
+	}else{
+		cout<<"Couldn't open the file: "<< filename;
+	}
+
+	myReadFile.close();
+
+	return NULL;
+}
 
 void printArray(double *array, int size) {
 	int i = 0;
@@ -38,23 +71,25 @@ int main(int argv, char** argc) {
 	int i = 0;
 	int size = 1;
 
-	for (size = 1; size <= 1000; size++) {
-		array = (double *) malloc(sizeof(double) * size);
-		if (array != NULL) {
-			srand(time(NULL));
-			for (i = 0; i < size; i++) {
-				array[i] = rand() % time(NULL);
-			}
+readArrayFromFile(NULL);
 
-			quick_sort(array, size);
-
-			testArrayAscending(array, size);
-			printArray(array, size);
-			cout<<endl;
-		}
-
-		free(array);
-	}
+//	for (size = 1; size <= 1000; size++) {
+//		array = (double *) malloc(sizeof(double) * size);
+//		if (array != NULL) {
+//			srand(time(NULL));
+//			for (i = 0; i < size; i++) {
+//				array[i] = rand() % time(NULL);
+//			}
+//
+//			quick_sort(array, size);
+//
+//			testArrayAscending(array, size);
+//			printArray(array, size);
+//			cout<<endl;
+//		}
+//
+//		free(array);
+//	}
 
 //	for (i = 0; i < size; i++) {
 //		cout << array[i] << " ";
