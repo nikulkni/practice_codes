@@ -16,20 +16,40 @@ struct arrayVal{
 
 int * readArrayFromFile(char *filename){
 	struct arrayVal head;
-
+	struct arrayVal *prev = &head;
+	int size = 0;
+	int *array;
 
 	ifstream myReadFile;
 	myReadFile.open("inputFile.txt");
 	char output[100];
+	struct arrayVal *newVal;
 
 	if(myReadFile.is_open()){
 		if (!myReadFile.eof()) {
 			do{
+				size++;
 				bzero(output, 100);
 				myReadFile >> output;
-				cout<<atoi(output);
+				newVal = (arrayVal *)malloc(sizeof(arrayVal));
 
+				newVal->value = atoi(output);
+
+				prev->next = newVal;
+				//cout<<prev->value<<endl;
+				prev = prev->next;
 			}while(!myReadFile.eof());
+
+			prev = head.next;
+
+			while(prev){
+				cout<<prev->value<<endl;
+				prev = prev->next;
+			}
+
+			array = (int *)malloc(sizeof(int) * size);
+			int i=0;
+
 		}
 	}else{
 		cout<<"Couldn't open the file: "<< filename;
@@ -37,7 +57,7 @@ int * readArrayFromFile(char *filename){
 
 	myReadFile.close();
 
-	return NULL;
+	return array;
 }
 
 void printArray(double *array, int size) {
@@ -71,6 +91,7 @@ int main(int argv, char** argc) {
 	int i = 0;
 	int size = 1;
 
+//	int *array;
 readArrayFromFile(NULL);
 
 //	for (size = 1; size <= 1000; size++) {
